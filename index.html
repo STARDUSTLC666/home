@@ -1,0 +1,826 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <script>
+    try {
+      document.querySelector('meta[name="color-scheme"]').content = localStorage.getItem("color-scheme") ?? "light dark";
+    } catch {}
+  </script>
+  <title>STARDUST | AI Systems &amp; DeepSeek Harness Ecosystem</title>
+  <meta name="description" content="STARDUST (STARDUSTLC666) 个人品牌主页：把模糊的 AI 需求构筑为可运行、可复核、可交付的工程工具。收录 20+ 原创 DeepSeek Harness (dsh-*) 工作台插件与自动化流水线。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="STARDUST | AI Systems &amp; Harness Builder" />
+  <meta property="og:description" content="把模糊的 AI 内容与自动化需求，构筑为可运行、可复核、可交付的工程工具。" />
+  <meta property="og:url" content="https://stardustlc666.github.io/home/" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%2338BDF8'/%3E%3Cstop offset='50%25' stop-color='%236366F1'/%3E%3Cstop offset='100%25' stop-color='%23EC4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='%230F172A'/%3E%3Cpath d='M16 5 L18.8 13.2 L27 16 L18.8 18.8 L16 27 L13.2 18.8 L5 16 L13.2 13.2 Z' fill='url(%23g)'/%3E%3C/svg%3E" />
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg-light: #ffffff;
+      --bg-dark: #0e121c;
+      --bg-alt-light: #f8fafc;
+      --bg-alt-dark: #131826;
+      --surface-light: #ffffff;
+      --surface-dark: #161c2c;
+      --border-light: #e2e8f0;
+      --border-dark: #263046;
+      --border-strong-light: #cbd5e1;
+      --border-strong-dark: #3b4a6b;
+      --ink-light: #0f172a;
+      --ink-dark: #f8fafc;
+      --muted-light: #64748b;
+      --muted-dark: #94a3b8;
+      --accent-light: #4f46e5;
+      --accent-dark: #818cf8;
+      --pill-light: #f1f5f9;
+      --pill-dark: #1d2538;
+      --title-top-light: #09090b;
+      --title-bot-light: #64748b;
+      --title-top-dark: #ffffff;
+      --title-bot-dark: #94a3b8;
+
+      --bg: var(--bg-light);
+      --bg-alt: var(--bg-alt-light);
+      --surface: var(--surface-light);
+      --border: var(--border-light);
+      --border-strong: var(--border-strong-light);
+      --ink: var(--ink-light);
+      --muted: var(--muted-light);
+      --accent: var(--accent-light);
+      --pill: var(--pill-light);
+      --title-top: var(--title-top-light);
+      --title-bot: var(--title-bot-light);
+
+      @media (prefers-color-scheme: dark) {
+        --bg: var(--bg-dark);
+        --bg-alt: var(--bg-alt-dark);
+        --surface: var(--surface-dark);
+        --border: var(--border-dark);
+        --border-strong: var(--border-strong-dark);
+        --ink: var(--ink-dark);
+        --muted: var(--muted-dark);
+        --accent: var(--accent-dark);
+        --pill: var(--pill-dark);
+        --title-top: var(--title-top-dark);
+        --title-bot: var(--title-bot-dark);
+      }
+
+      &:has(> head > meta[name="color-scheme"][content="dark"]) {
+        color-scheme: dark;
+      }
+      &:has(> head > meta[name="color-scheme"][content="light"]) {
+        color-scheme: light;
+      }
+
+      @supports (color: light-dark(white, black)) {
+        --bg: light-dark(var(--bg-light), var(--bg-dark));
+        --bg-alt: light-dark(var(--bg-alt-light), var(--bg-alt-dark));
+        --surface: light-dark(var(--surface-light), var(--surface-dark));
+        --border: light-dark(var(--border-light), var(--border-dark));
+        --border-strong: light-dark(var(--border-strong-light), var(--border-strong-dark));
+        --ink: light-dark(var(--ink-light), var(--ink-dark));
+        --muted: light-dark(var(--muted-light), var(--muted-dark));
+        --accent: light-dark(var(--accent-light), var(--accent-dark));
+        --pill: light-dark(var(--pill-light), var(--pill-dark));
+        --title-top: light-dark(var(--title-top-light), var(--title-top-dark));
+        --title-bot: light-dark(var(--title-bot-light), var(--title-bot-dark));
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.82em;
+      padding: 0.16em 0.48em;
+      border-radius: 6px;
+      background: var(--pill);
+      color: var(--ink);
+    }
+
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 12px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      background: var(--ink);
+      color: var(--bg);
+      z-index: 100;
+    }
+    .skip-link:focus { left: 16px; }
+
+    .shell { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+    /* Sticky Frosted Glass Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      border-bottom: 1px solid var(--border);
+      background: color-mix(in srgb, var(--bg) 82%, transparent);
+      backdrop-filter: blur(16px);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 62px;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding-block: 8px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      font-size: 14px;
+    }
+    .brand-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #38bdf8, #6366f1, #ec4899);
+    }
+    .nav-bar {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .nav-bar a:hover { color: var(--ink); }
+    .ctrl-btn {
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--pill);
+      color: var(--ink);
+      font-size: 12px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: border-color 0.15s ease;
+    }
+    .ctrl-btn:hover { border-color: var(--border-strong); }
+
+    /* Daylight Prism Horizon Hero */
+    .hero {
+      position: relative;
+      padding: 68px 0 64px;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      overflow: hidden;
+      background:
+        radial-gradient(56% 52% at 50% 96%, rgba(99, 102, 241, 0.14), rgba(236, 72, 153, 0.07) 48%, transparent 100%),
+        var(--bg);
+    }
+    .hero-dots {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(color-mix(in srgb, var(--muted) 34%, transparent) 1px, transparent 1px);
+      background-size: 18px 18px;
+      mask-image: radial-gradient(ellipse 54% 55% at 50% 42%, black 20%, transparent 100%);
+      pointer-events: none;
+    }
+    .hero-inner { position: relative; z-index: 1; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 15px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: color-mix(in srgb, var(--surface) 85%, transparent);
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 11.5px;
+      letter-spacing: 0.14em;
+    }
+    .hero h1 {
+      margin: 22px 0 16px;
+      font-size: clamp(2.8rem, 7vw, 4.6rem);
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      line-height: 1.08;
+      background: linear-gradient(180deg, var(--title-top) 0%, var(--title-bot) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .hero-lead {
+      max-width: 680px;
+      margin: 0 auto 14px;
+      font-size: clamp(1.08rem, 2.2vw, 1.35rem);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+    .hero-sub {
+      max-width: 640px;
+      margin: 0 auto 28px;
+      font-size: 14.5px;
+      color: var(--muted);
+    }
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+    .btn-primary {
+      padding: 10px 22px;
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--bg);
+      font-size: 13.5px;
+      font-weight: 600;
+    }
+    .btn-secondary {
+      padding: 10px 20px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--ink);
+      font-size: 13.5px;
+      font-weight: 500;
+    }
+    .btn-secondary:hover { border-color: var(--border-strong); }
+
+    .metrics {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .metric-pill {
+      padding: 10px 18px;
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--surface) 88%, transparent);
+      border: 1px solid var(--border);
+    }
+    .metric-pill strong { color: var(--ink); font-size: 16px; margin-right: 4px; }
+
+    .prism-horizon {
+      display: block;
+      width: 100%;
+      max-width: 900px;
+      height: 68px;
+      margin: 26px auto -64px;
+      pointer-events: none;
+    }
+
+    /* Sections */
+    .section { padding: 64px 0 0; }
+    .section-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .section-tag {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      color: var(--accent);
+    }
+    .section-head h2 { margin: 4px 0 0; font-size: 25px; letter-spacing: -0.01em; }
+    .section-note { font-size: 12.5px; color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 16px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(296px, 1fr));
+      gap: 14px;
+    }
+
+    /* Interactive Cursor-Spotlight Card */
+    .card {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 24px;
+      border-radius: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 0%), color-mix(in srgb, var(--accent) 11%, transparent), transparent 65%);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      pointer-events: none;
+    }
+    .card:hover::before { opacity: 1; }
+    .card:hover { border-color: var(--border-strong); }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 11.5px;
+      color: var(--muted);
+    }
+    .card-badge {
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--pill);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .card h3 { margin: 10px 0 6px; font-size: 18px; line-height: 1.35; }
+    .card p { margin: 0; font-size: 13.5px; color: var(--muted); }
+    .card-links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      font-size: 12.5px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    .card-link {
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .card-link:hover { text-decoration: underline; }
+
+    /* Filter & Search Controls */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .cat-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .cat-pill {
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--pill);
+      color: var(--muted);
+      font-size: 12.5px;
+      font-family: inherit;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.15s ease, color 0.15s ease;
+    }
+    .cat-pill:hover { color: var(--ink); }
+    .cat-pill[aria-pressed="true"] {
+      background: var(--ink);
+      color: var(--bg);
+      border-color: var(--ink);
+    }
+    .search-box {
+      padding: 8px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg-alt);
+      color: var(--ink);
+      font-size: 13px;
+      width: min(100%, 270px);
+      font-family: inherit;
+    }
+
+    .stack-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    footer {
+      margin-top: 72px;
+      padding: 32px 0 48px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    footer a:hover { color: var(--ink); }
+
+    @keyframes prismSweep {
+      0%, 100% { transform: translateX(-140px); opacity: 0.55; }
+      50% { transform: translateX(140px); opacity: 1; }
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      body:not([data-motion="paused"]) .prism-beam {
+        animation: prismSweep 7s ease-in-out infinite;
+      }
+      .card:hover { transform: translateY(-2px); }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a href="#top" class="brand" aria-label="STARDUST 首页">
+        <span class="brand-dot" aria-hidden="true"></span>
+        <span>STARDUST</span>
+      </a>
+      <nav class="nav-bar" aria-label="主导航">
+        <a href="#flagship">代表作</a>
+        <a href="#ecosystem">原创插件矩阵</a>
+        <a href="#principles">工程准则</a>
+        <button id="motion-toggle" type="button" class="ctrl-btn">暂停光效</button>
+        <button id="theme-toggle" type="button" class="ctrl-btn" aria-label="切换浅色或深色主题">切换深浅色</button>
+        <a href="https://github.com/STARDUSTLC666" target="_blank" rel="noreferrer" class="ctrl-btn">GitHub ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section id="top" class="hero">
+      <div class="hero-dots" aria-hidden="true"></div>
+      <div class="shell hero-inner">
+        <span class="eyebrow">STARDUSTLC666 · AI SYSTEMS &amp; HARNESS BUILDER</span>
+        <h1>STARDUST</h1>
+        <p class="hero-lead">把模糊的 AI 需求，构筑为可运行、可复核、可交付的系统。</p>
+        <p class="hero-sub">
+          独立构建并维护 20+ 原创 DeepSeek Harness（<code>dsh-*</code>）工作台插件与证据优先的自动化视频流水线，覆盖多账号邮件、代码驱动视频、演示文稿、任务记忆、数据库与桌面自动化。
+        </p>
+
+        <div class="cta-row">
+          <a href="#flagship" class="btn-primary">查看核心代表作 ↓</a>
+          <a href="#ecosystem" class="btn-secondary">检索全部 23 个原创仓库</a>
+          <a href="https://github.com/STARDUSTLC666" target="_blank" rel="noreferrer" class="btn-secondary">GitHub 主页 ↗</a>
+        </div>
+
+        <div class="metrics">
+          <div class="metric-pill"><strong>255+</strong> GitHub Stars</div>
+          <div class="metric-pill"><strong>20+</strong> 原创开源工作台</div>
+          <div class="metric-pill"><strong>01 可运行 · 02 可复核 · 03 可维护</strong></div>
+        </div>
+
+        <svg class="prism-horizon" viewBox="0 0 900 84" aria-hidden="true">
+          <defs>
+            <linearGradient id="rim" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#38BDF8" stop-opacity="0"/>
+              <stop offset="26%" stop-color="#38BDF8"/>
+              <stop offset="50%" stop-color="#6366F1"/>
+              <stop offset="74%" stop-color="#EC4899"/>
+              <stop offset="100%" stop-color="#EC4899" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <ellipse cx="450" cy="222" rx="540" ry="196" fill="none" stroke="url(#rim)" stroke-width="1.8" opacity="0.62"/>
+          <g class="prism-beam">
+            <ellipse cx="450" cy="222" rx="540" ry="196" fill="none" stroke="url(#rim)" stroke-width="3.4"/>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <div class="shell">
+      <!-- 01. Flagship Workbenches -->
+      <section id="flagship" class="section" aria-labelledby="flagship-title">
+        <div class="section-head">
+          <div>
+            <div class="section-tag">01 // SELECTED WORKBENCHES</div>
+            <h2 id="flagship-title">核心代表作与主力工作台</h2>
+          </div>
+          <span class="section-note">100% Original Open-Source Projects</span>
+        </div>
+
+        <div class="grid-2">
+          <article class="card">
+            <div>
+              <div class="card-meta">
+                <span class="card-badge">01 · WORKBENCH</span>
+                <span>★ 48 · Fork 15 · JavaScript</span>
+              </div>
+              <h3>dsh-email · 多账号邮件工作台</h3>
+              <p>支持多账号收发管理、HTML 富文本回复与草稿箱、Google / Outlook OAuth 授权登录，以及二次确认定时发送与可选邮件任务。</p>
+            </div>
+            <div class="card-links">
+              <a class="card-link" href="https://github.com/STARDUSTLC666/dsh-email" target="_blank" rel="noreferrer">查看仓库 dsh-email ↗</a>
+              <code>OAuth 2.0</code>
+              <code>IMAP / SMTP</code>
+            </div>
+          </article>
+
+          <article class="card">
+            <div>
+              <div class="card-meta">
+                <span class="card-badge">02 · VIDEO ENGINES</span>
+                <span>★ 74 合计 · TS / JS</span>
+              </div>
+              <h3>dsh-remotion &amp; dsh-hyperframes</h3>
+              <p>代码驱动双视频工作台：涵盖官方 Remotion（React）与 HyperFrames（HTML/GSAP）技能、工程模板检索、素材排序、实时预览与本地 MP4 导出。</p>
+            </div>
+            <div class="card-links">
+              <a class="card-link" href="https://github.com/STARDUSTLC666/dsh-remotion" target="_blank" rel="noreferrer">dsh-remotion (38★) ↗</a>
+              <a class="card-link" href="https://github.com/STARDUSTLC666/dsh-hyperframes" target="_blank" rel="noreferrer">dsh-hyperframes (36★) ↗</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <div>
+              <div class="card-meta">
+                <span class="card-badge">03 · SLIDE DELIVERY</span>
+                <span>★ 38 · Fork 7 · JavaScript</span>
+              </div>
+              <h3>dsh-ppt · 演示文稿直接交付台</h3>
+              <p>面向直接交付设计的演示文稿生成工具：给出原始材料与结构要点，自动完成版式编排并生成可直接下载复用的标准 PPTX 成品。</p>
+            </div>
+            <div class="card-links">
+              <a class="card-link" href="https://github.com/STARDUSTLC666/dsh-ppt" target="_blank" rel="noreferrer">查看仓库 dsh-ppt ↗</a>
+              <code>PPTX Synthesis</code>
+              <code>Slide Deck</code>
+            </div>
+          </article>
+
+          <article class="card">
+            <div>
+              <div class="card-meta">
+                <span class="card-badge">04 · AGENT MEMORY</span>
+                <span>★ 14 · Fork 2 · JavaScript</span>
+              </div>
+              <h3>dsh-dream · 原生任务记忆插件</h3>
+              <p>自动整理历史任务中的候选经验，由用户在可视化工作台中核对原始来源和适用范围后采纳，供后续相关任务精准取回复用。</p>
+            </div>
+            <div class="card-links">
+              <a class="card-link" href="https://github.com/STARDUSTLC666/dsh-dream" target="_blank" rel="noreferrer">查看仓库 dsh-dream ↗</a>
+              <code>Agent Memory</code>
+              <code>Human-Verified</code>
+            </div>
+          </article>
+        </div>
+
+        <div class="grid-2" style="margin-top: 16px;">
+          <article class="card" style="background: var(--bg-alt);">
+            <div>
+              <div class="card-meta">
+                <span class="card-badge">PIPELINE · 证据优先内容系统</span>
+                <span>Python · TS · Remotion</span>
+              </div>
+              <h3>ai-daily-briefing · 可审计 AI 新闻视频流水线</h3>
+              <p>来源分级、官方源回溯、事实冻结、Remotion 自动渲染与发布前质量门禁（490+ 测试覆盖），输出带完整证据链的成片投稿包。</p>
+            </div>
+            <div class="card-links">
+              <a class="card-link" href="https://github.com/STARDUSTLC666/ai-daily-briefing" target="_blank" rel="noreferrer">查看源码仓库 ↗</a>
+              <a class="card-link" href="https://stardustlc666.github.io/" target="_blank" rel="noreferrer">查看工程验收专题页 ↗</a>
+            </div>
+          </article>
+
+          <article class="card" style="background: var(--bg-alt);">
+            <div>
+              <div class="card-meta">
+                <span class="card-badge">BUNDLE · 一键组合套件</span>
+                <span>★ 4 · Toolkit</span>
+              </div>
+              <h3>dsh-suite · DeepSeek Harness 18 合 1 组合包</h3>
+              <p>一次安装 18 个原创独立工作台插件，完整覆盖邮件、日历、任务记忆、音视频处理与研发安全审阅，更新由用户自主按需选择。</p>
+            </div>
+            <div class="card-links">
+              <a class="card-link" href="https://github.com/STARDUSTLC666/dsh-suite" target="_blank" rel="noreferrer">查看仓库 dsh-suite ↗</a>
+              <code>18-in-1 Bundle</code>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- 02. Filterable & Searchable Original Ecosystem -->
+      <section id="ecosystem" class="section" aria-labelledby="eco-title">
+        <div class="section-head">
+          <div>
+            <div class="section-tag">02 // ORIGINAL ECOSYSTEM MATRIX</div>
+            <h2 id="eco-title">全部原创插件与系统检索</h2>
+          </div>
+          <span id="repo-count" class="section-note">显示 23 / 23 个原创仓库</span>
+        </div>
+
+        <div class="filter-bar">
+          <div class="cat-pills" role="group" aria-label="按分类筛选原创仓库">
+            <button type="button" class="cat-pill" data-cat="all" aria-pressed="true">全部原创 (23)</button>
+            <button type="button" class="cat-pill" data-cat="media" aria-pressed="false">媒体与文稿 (6)</button>
+            <button type="button" class="cat-pill" data-cat="work" aria-pressed="false">沟通、日程与记忆 (7)</button>
+            <button type="button" class="cat-pill" data-cat="dev" aria-pressed="false">研发、桌面与安全 (8)</button>
+            <button type="button" class="cat-pill" data-cat="hub" aria-pressed="false">套件与中心 (2)</button>
+          </div>
+
+          <input id="repo-search" type="search" class="search-box" placeholder="搜索插件名、功能或语言…" aria-label="搜索原创仓库" />
+        </div>
+
+        <div id="repo-grid" class="grid-3"></div>
+      </section>
+
+      <!-- 03. Engineering Principles & Stack -->
+      <section id="principles" class="section" aria-labelledby="prin-title">
+        <div class="section-head">
+          <div>
+            <div class="section-tag">03 // ENGINEERING PRINCIPLES</div>
+            <h2 id="prin-title">工程准则与核心技术栈</h2>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <div class="card" style="background: var(--bg-alt);">
+            <div>
+              <div class="section-tag">01 // EXECUTABLE</div>
+              <h3>可运行 · 交付真实产品</h3>
+              <p>不止步于概念演示，把复杂模型与多媒体工作流封装为跨平台开箱即用的工具台。</p>
+            </div>
+          </div>
+          <div class="card" style="background: var(--bg-alt);">
+            <div>
+              <div class="section-tag">02 // VERIFIABLE</div>
+              <h3>可复核 · 保留证据与门禁</h3>
+              <p>关键结论保留原始来源回溯；邮件发送、数据库修改与桌面控制均配备受控确认门禁。</p>
+            </div>
+          </div>
+          <div class="card" style="background: var(--bg-alt);">
+            <div>
+              <div class="section-tag">03 // MAINTAINABLE</div>
+              <h3>可维护 · 清晰权限边界</h3>
+              <p>每个插件边界清晰、独立解耦、权限透明，既可单独轻量引入，也可由 dsh-suite 统一编排。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="stack-strip" aria-label="核心技术栈">
+          <code>TypeScript</code>
+          <code>JavaScript / Node.js</code>
+          <code>Python</code>
+          <code>C# / Windows UIA</code>
+          <code>React &amp; Remotion</code>
+          <code>HyperFrames &amp; GSAP</code>
+          <code>FFmpeg</code>
+          <code>Edge TTS / Whisper</code>
+          <code>SQLite / MySQL / PostgreSQL</code>
+          <code>Docker</code>
+        </div>
+      </section>
+
+      <footer>
+        <div>
+          <strong style="color: var(--ink);">STARDUST</strong> · STARDUSTLC666 — 把模糊需求做成可运行、可复核、可交付的工具。
+        </div>
+        <div style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;">
+          <a href="https://github.com/STARDUSTLC666" target="_blank" rel="noreferrer">github.com/STARDUSTLC666 ↗</a>
+          &nbsp;·&nbsp;
+          <a href="mailto:liuzhousk@gmail.com">liuzhousk@gmail.com</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+
+  <script>
+    // 100% Verified Original Repositories of STARDUSTLC666 (isFork === false)
+    const REPOS = [
+      { name: "dsh-email", stars: 48, lang: "JavaScript", cat: "work", desc: "DeepSeek Harness 邮件工作台：多账号、HTML 回复与草稿、OAuth 与确认定时发送。" },
+      { name: "dsh-ppt", stars: 38, lang: "JavaScript", cat: "media", desc: "给出原始材料，直接生成可下载交付的演示文稿成品。" },
+      { name: "dsh-remotion", stars: 38, lang: "TypeScript", cat: "media", desc: "DSH React 视频工作台：官方 Remotion 技能、工程检索、模板、预览与 MP4 导出。" },
+      { name: "dsh-hyperframes", stars: 36, lang: "JavaScript", cat: "media", desc: "DSH HTML 视频工作台：官方 HyperFrames 技能、模板检索、预览与本地 MP4 导出。" },
+      { name: "dsh-ffmpeg", stars: 16, lang: "JavaScript", cat: "media", desc: "本机 FFmpeg 音视频处理：裁切、转码、字幕、音轨、GIF、抽帧与视频总览图。" },
+      { name: "dsh-dream", stars: 14, lang: "JavaScript", cat: "work", desc: "原生任务记忆插件：自动整理候选经验，工作台核对来源与适用范围后采纳。" },
+      { name: "dsh-codex-port", stars: 10, lang: "JavaScript", cat: "dev", desc: "将 Codex 技能移植到 DSH：导入预览、调用策略与许可保留、重名检查。" },
+      { name: "dsh-sql", stars: 9, lang: "JavaScript", cat: "dev", desc: "数据库工具：SQLite / MySQL / PostgreSQL 查询、结构统计、只读保护和写操作确认。" },
+      { name: "dsh-calendar", stars: 7, lang: "JavaScript", cat: "work", desc: "原生日历工作台：连接 CalDAV，切换月/周/议程视图，查找空闲时段并导入 ICS。" },
+      { name: "deepseek-computer-use", stars: 6, lang: "C#", cat: "dev", desc: "Windows 桌面自动化插件：窗口截图、UIA 界面控件、键鼠控制、会话授权与操作审计。" },
+      { name: "dsh-rss", stars: 6, lang: "JavaScript", cat: "work", desc: "RSS / Atom 订阅工作台：分类来源目录、订阅读取、全文搜索与 OPML 导入导出。" },
+      { name: "dsh-voice", stars: 6, lang: "JavaScript", cat: "media", desc: "语音工具：Edge TTS 朗读、兼容 ASR 转写、工作区文件保护与并发输出。" },
+      { name: "xingqiong-hub", stars: 6, lang: "HTML", cat: "hub", desc: "星穹枢庭 · Gemini Sanctuary 静态导航中心。" },
+      { name: "dsh-cite", stars: 5, lang: "JavaScript", cat: "work", desc: "引文工作台：DOI / BibTeX 导入去重、Crossref 核查与补全、引文导出及来源备份。" },
+      { name: "dsh-suite", stars: 4, lang: "JavaScript", cat: "hub", desc: "DSH 组合包：一次安装 18 个原创独立插件，覆盖邮件、日历、记忆、媒体与开发工具。" },
+      { name: "dsh-docker", stars: 3, lang: "JavaScript", cat: "dev", desc: "Docker 工具：容器与镜像管理、日志、状态检查及操作确认，清晰报告权限原因。" },
+      { name: "dsh-dingtalk", stars: 3, lang: "JavaScript", cat: "work", desc: "钉钉通知：向自定义群机器人发送文本或 Markdown，支持签名配置与自检。" },
+      { name: "dsh-slack", stars: 3, lang: "JavaScript", cat: "work", desc: "Slack 工具：通知、Socket Mode 收件箱、线程回复、连接状态与受控重连。" },
+      { name: "dsh-code-security", stars: 2, lang: "JavaScript", cat: "dev", desc: "代码安全工作台：本地静态检查、Git 改动审查、证据留存与修复复核。" },
+      { name: "dsh-minimal-ptc", stars: 2, lang: "JavaScript", cat: "dev", desc: "极简 PTC 预设：Python / TypeScript 工具编排、Windows 终端适配与宿主关键约束保留。" },
+      { name: "dsh-flakefinder", stars: 1, lang: "JavaScript", cat: "dev", desc: "偶发测试调查：重复运行、失败记录、工作区隔离列表与写操作确认。" },
+      { name: "dsh-review", stars: 0, lang: "TypeScript", cat: "dev", desc: "DSH 代码审阅（已发布 npm 包 dsh-review）：独立发现缺陷、证据复核、修复跟踪与门禁。" },
+      { name: "ai-daily-briefing", stars: 0, lang: "Python", cat: "media", desc: "证据优先、可审计的 AI 新闻视频流水线：官方源回溯、事实冻结、Remotion 渲染与门禁。" }
+    ];
+
+    const grid = document.getElementById("repo-grid");
+    const countEl = document.getElementById("repo-count");
+    const search = document.getElementById("repo-search");
+    const pills = Array.from(document.querySelectorAll(".cat-pill"));
+    let cat = "all";
+
+    function bindSpotlight(container) {
+      container.querySelectorAll(".card").forEach(c => {
+        c.addEventListener("pointermove", (e) => {
+          const r = c.getBoundingClientRect();
+          c.style.setProperty("--mx", `${e.clientX - r.left}px`);
+          c.style.setProperty("--my", `${e.clientY - r.top}px`);
+        });
+      });
+    }
+
+    function render() {
+      const q = search.value.trim().toLowerCase();
+      const filtered = REPOS.filter(r =>
+        (cat === "all" || r.cat === cat) &&
+        (!q || r.name.toLowerCase().includes(q) || r.desc.toLowerCase().includes(q) || r.lang.toLowerCase().includes(q))
+      );
+      countEl.textContent = `显示 ${filtered.length} / ${REPOS.length} 个原创仓库`;
+
+      if (!filtered.length) {
+        grid.innerHTML = `<div class="card" style="grid-column:1/-1;text-align:center;align-items:center;padding:36px;">
+          <p>未找到匹配的仓库，试试搜索「视频」「邮件」「SQL」或切换上方分类。</p>
+        </div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(r => `
+        <a class="card" href="https://github.com/STARDUSTLC666/${r.name}" target="_blank" rel="noreferrer" style="padding:18px 20px;">
+          <div>
+            <div class="card-meta">
+              <strong style="color:var(--ink);font-size:14.5px;">${r.name}</strong>
+              <span>${r.stars > 0 ? `★ ${r.stars}` : r.lang} ↗</span>
+            </div>
+            <p style="margin-top:8px;font-size:12.8px;">${r.desc}</p>
+          </div>
+          <div><code>${r.lang}</code></div>
+        </a>
+      `).join("");
+      bindSpotlight(grid);
+    }
+
+    pills.forEach(p => {
+      p.addEventListener("click", () => {
+        cat = p.dataset.cat;
+        pills.forEach(b => b.setAttribute("aria-pressed", String(b === p)));
+        render();
+      });
+    });
+    search.addEventListener("input", render);
+    bindSpotlight(document);
+    render();
+
+    // Two-state color-scheme override preserving OS preference when matched
+    const metaScheme = document.querySelector('meta[name="color-scheme"]');
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+      const sysDark = matchMedia("(prefers-color-scheme: dark)").matches;
+      let stored = null;
+      try { stored = localStorage.getItem("color-scheme"); } catch {}
+      const currentDark = stored ? stored === "dark" : sysDark;
+      const target = currentDark ? "light" : "dark";
+      const sysCurrent = sysDark ? "dark" : "light";
+      try {
+        if (target === sysCurrent) localStorage.removeItem("color-scheme");
+        else localStorage.setItem("color-scheme", target);
+      } catch {}
+      metaScheme.content = target === sysCurrent ? "light dark" : target;
+    });
+    window.addEventListener("storage", (e) => {
+      if (e.key === "color-scheme") metaScheme.content = e.newValue ?? "light dark";
+    });
+
+    // WCAG 2.2.2 Pause/Play Control
+    const motionBtn = document.getElementById("motion-toggle");
+    motionBtn.addEventListener("click", () => {
+      const paused = document.body.getAttribute("data-motion") === "paused";
+      if (paused) {
+        document.body.removeAttribute("data-motion");
+        motionBtn.textContent = "暂停光效";
+      } else {
+        document.body.setAttribute("data-motion", "paused");
+        motionBtn.textContent = "播放光效";
+      }
+    });
+  </script>
+</body>
+</html>
